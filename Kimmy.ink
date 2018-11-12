@@ -1,25 +1,34 @@
 VAR money = 25
 VAR DiceNum = 2
 VAR RopeNum = 2
-VAR FriseebNum = 1
+VAR FrisbeeNum = 1
 VAR ChalkNum = 1
 VAR BallNum = 1
 VAR NotepadNum = 1
 
 VAR HaveGame = false
+VAR CurrentLocation = -> Map
+
+VAR Partner = "Kimmy"
 
 Dana:			Mom! Look! God sent me a baby!
 Mom:			...Excuse me?
 Dana:			Her name is Kimmy!
 Kimmy:			...
 Mom:			That… No, Dana. God did not send you a baby.
++ [?] ->0_1
+= 0_1
 Dana:			What do you mean…? You said God sends people babies sometimes! You told me that.
 Mom:			Well… nevermind what I said. It doesn’t apply to you. God isn’t about to send you a baby anytime soon, trust me.
++ [?!] ->0_2
+= 0_2
 Dana:			What! Why? I wished for a baby, and he granted my wish. Isn’t it obvious?
 Mom:			Where did you find this little girl? Honey, where’s your house?
 Kimmy:			...
 Mom:			Kimmy, can you tell me where your parents are?
 Kimmy:			I can go home later if I want…
++ [...?] ->0_3
+= 0_3
 Dana:			Well maybe God didn’t send her, but she came out of nowhere! Kimmy, you just… appeared, right? Where did you come from?
 Kimmy:			Ferry Street... I untied myself from the porch so I could go for a walk…
 Dana:			...
@@ -32,13 +41,19 @@ Mom:			It’s ok deear, let’s go to your house Kimmy… you said it’s on Fer
 == KimmysHouse ===
 Dana:			I’m sorry… I thought God sent me a baby and I got so excited…
 KimmyMom:			Oh, don’t worry. Thank you for finding Kimmy and walking her home. What's your name, dear?
++ [Dana] ->0_4
+= 0_4
 Dana:			I’m Dana…
 KimmyMom:			I don’t know many kids as responsible as you, walking Kimmy all the way home. I hope you two can be friends. I know Kimmy could learn a lot from you.
 Kimmy:			My… friend?
++ [!!] ->0_5
+= 0_5
 Dana:			Yes! I’d love to be friends, Kimmy. Can I come by and play with you tomorrow?
 KimmyMom:			I’ve been looking for a babysitter, actually. Her grandma was helping with that before, but she… well, she can’t anymore.
 KimmyMom:			Kimmy’s normally alright in her harness on the porch, but she’s getting a little old for that…
 KimmyMom:			If you’d like to play with Kimmy tomorrow, I’d be happy to pay you a quarter to keep an eye on her.
++ [!!!] ->0_6
+= 0_6
 Dana:			Wow! Yes, please! I’d love to!
 KimmyMom:			My work schedule is a little… hectic. It’d be great to have you by in the morning.
 Dana:			I’ll be here first thing! Wow, I didn’t expect to land a job today. Thanks so much!
@@ -55,22 +70,33 @@ Kimmy:			Bye bye.
 === Day1 ===
 Dana:			Mornin’ Kimmy! I’m here to babysit, like I promised! Is your mom around?
 Kimmy:			My mommy’s not inside. She left already.
++ [...] ->1_1
+= 1_1
 Dana:			Oh, ok… Um, well… Is there anything you’d like to do today, Kimmy?
 Kimmy:			No… I don’t know.
++ [Friend?] ->1_2
+= 1_2
 Dana:			That’s ok, do you have a friend you’d like to visit?
 Kimmy:			No...
++ [TV?] ->1_3
+= 1_3
 Dana:			Should we watch TV or something in your house?
 Kimmy:			We don’t have a TV. My dad is in there too, so we should go play somewhere else. He’s busy.
++ [Go out?] ->1_4
+= 1_4
 Dana:			Ok then! Want to walk around and play some games with the other kids?
 Kimmy:			Other kids…?
 Dana:			You know, the neighborhood kids. Like Donna. Isn’t she your age? You’re both going to be in Kindergarten, right?
 Kimmy:			Oh, yeah… I don’t think Donna is my friend though, so she probably wouldn’t want to play...
++ [^_^] ->1_5
+= 1_5
 Dana:			Well, let’s go become her friend! There's lots of other kids around, too. Like Anthony. I know him from school.
 Dana:			Come on, let’s go!
 Kimmy:			...!
+-> Map
 
 
-
+=== Map ===
 + Downtown
 -> Downtown
    
@@ -84,14 +110,20 @@ Kimmy:			...!
 -> KimmyHouseDay1
 
 === Downtown ===
+ ~ CurrentLocation = -> Downtown
  + [Talk to Jimmy]
         -> Jimmy
  + [Talk to Anthony]
         -> AnthonyAmber
-
+ + [Back]
+    -> Map
+    
     = Jimmy
+    ~Partner = "Jimmy"
     Jimmy:			...Hi Kimmy.
-    Kimmy:			Hi Jimmy…
+    Kimmy:			Hi Jimmy...
+    + [...] -> 2_1
+    = 2_1
     Dana:			...
     Dana:			Whatcha reading there, Jimmy? Looks neat.
     Jimmy:			M-my comic… Archie...
@@ -100,6 +132,8 @@ Kimmy:			...!
     Kimmy:			I’ve never read a comic before.
     Jimmy:			Y-you can borrow one of mine whenever you like, Kimmy! And then we can uh…
     Jimmy:			We can talk about it and pick our--our favorite characters!
+    + [!] -> 2_2
+    = 2_2
     Dana:			Wow! That’s so nice of you, Jimmy! Guess you have a new friend, Kimmy!
     Kimmy:			I think… that sounds fun...
     Jimmy:			A-anytime, anytime… um…
@@ -109,13 +143,10 @@ Kimmy:			...!
     Jimmy:			If you’re learning games, can I play games with you on the playground sometimes too, Kimmy? Once school starts?
     Kimmy:			...Ok. I don’t play much at school but I will with you if you want.
     Jimmy:			What! Oh! Yes… yes please…
-        + [Check Games In Inventory] 
-      {HaveGame == false:
-            There is currently no games in Inventory!
-            -> ZeroGame
-         } 
+    -> CheckInventory
 
     = AnthonyAmber
+    ~Partner = "Anthony"
     Dana:			Hey Anthony.
     Anthony:			Hi Dana. It’s so weird seeing you outside of school, haha.
     Amber:			I’m Amber!
@@ -131,31 +162,41 @@ Kimmy:			...!
     Dana:			Well, we’d like to play a game!
     Anthony:			We’d been playing games with Harold earlier… but maybe we could try something new? Amber’s kinda picky though--fair warning.
     Amber:			Am not!
-    + [Check Games In Inventory] 
-      {HaveGame == false:
-            There is currently no games in Inventory!
-            -> ZeroGame
-         } 
+    -> CheckInventory
 
-    === games ===
- You add a game.
  ->DONE
 === Home ===
+~ CurrentLocation = -> Home
 bbb
+
++ [Back]
+    -> Map
+    
  ->DONE
 
 === Playground ===
+~ CurrentLocation = -> Playground
 ccc
+
++ [Back]
+    -> Map
+    
  ->DONE
  
 === KimmyHouseDay1 ===
+~ CurrentLocation = -> KimmyHouseDay1
 + [Talk to Donna]
 -> Donna
 
 + [Go To Shop]
 -> Shop
 
++ [Back]
+    -> Map
+    
+
 = Donna
+~Partner = "Donna"
 Kimmy:			Hi Donna.
 Donna:			What happened, Kimmy? Did you untie yourself from the porch again?
 Kimmy:			...
@@ -169,11 +210,7 @@ Dana:			Ok... well, I hope you two can get along, since you're neighbors... want
 Donna:			Well, I’m trying to avoid Harold so it’s probably good to look busy. He keeps trying to tell me that my ears look childish. He is so snobby.
 Kimmy:			I like your ears.
 Donna:			Oh, thanks. They’re new. Anyways, I wanna play a new game.
-    + [Check Games In Inventory] 
-      {HaveGame == false:
-            There is currently no games in Inventory!
-            -> ZeroGame
-         } 
+-> CheckInventory
         
 -> DONE
 
@@ -207,7 +244,7 @@ Dana and Kimmy now have {money} cents in their pocket.
         {RopeNum > 0: 
             + Buy a Rope -> BuyRope
             }
-        {FriseebNum > 0:
+        {FrisbeeNum > 0:
             + [Buy a Frisbee] -> BuyFrisbee
             }
         {BallNum > 0:
@@ -244,7 +281,7 @@ Dana and Kimmy now have {money} cents in their pocket.
     = BuyFrisbee 
         { money - 5 >= 0: 
             ~ money = money - 5
-            ~ FriseebNum = FriseebNum - 1
+            ~ FrisbeeNum = FrisbeeNum - 1
             ~ HaveGame = true
             Danna buys a frisbee. Danna has {money} cents left.
           - else:
@@ -276,7 +313,7 @@ Dana and Kimmy now have {money} cents in their pocket.
             ~ money = money - 6
             ~ ChalkNum = ChalkNum - 1
             ~ HaveGame = true
-            Danna buys a frisbee. Danna has {money} cents left.
+            Danna buys a box of chalks. Danna has {money} cents left.
           - else:
             Danna doesn't have enough money!
           }
@@ -291,7 +328,7 @@ Dana and Kimmy now have {money} cents in their pocket.
             ~ money = money - 3
             ~ NotepadNum = NotepadNum - 1
             ~ HaveGame = true
-            Danna buys a frisbee. Danna has {money} cents left.
+            Danna buys a notepad. Danna has {money} cents left.
           - else:
             Danna doesn't have enough money!
           }
@@ -323,15 +360,234 @@ Kimmy:			Thank you Mr. Dean!
 Dean:			Bye bye girls. Have fun.
     -> KimmyHouseDay1
 
+=== CheckInventory ===
+    + [Check Games In Inventory] 
+      {HaveGame == false:
+            There is currently no games in Inventory!
+            -> ZeroGame
+         - else:
+            -> Item
+         } 
 
-=== ZeroGame ===
+= ZeroGame
 Dana:			Oh no! I’m sorry… I thought I had some stuff to play games with in my bag… but it looks like I ran out.
 Kimmy:			Oh no...
 Dana:			It’s ok! Kimmy, let’s run to the store and buy some game pieces! We’ll be right back!
--> Downtown
+-> CurrentLocation
+
+= Item
+    You have 
+ {  DiceNum:
+ - 0 :
+    <> 2 dices,
+ - 1:
+    <> 1 dice,
+    }
+    
+ {  RopeNum:
+ - 0 :
+    <> 2 ropes,
+ - 1:
+    <> 1 rope,
+    }
+    
+ { FrisbeeNum == 0:
+    <> 1 frisbee,
+ }
+ 
+  { ChalkNum == 0:
+   <> 1 box of chalks,
+ }
+ 
+  { BallNum == 0:
+   <> 1 ball,
+ }
+ 
+  { NotepadNum == 0:
+   <> 1 notepad,
+ } 
+ <> in your inventory.
+
+-> Games
+
+ === Games ===
+What do you want to play with?
+ {  DiceNum < 2:
+    + [Dice] -> DiceGame
+    }
+    
+ {  RopeNum < 2:
+    + [Rope] -> RopeGame
+    }
+    
+ { FrisbeeNum == 0:
+   + [Frisbee] -> FrisbeeGame
+ }
+ 
+  { ChalkNum == 0:
+   + [Chalk] -> ChalkGame
+ }
+ 
+  { BallNum == 0:
+   + [Ball] -> BallGame
+ }
+ 
+  { NotepadNum == 0:
+   + [Notepad] -> NotepadGame
+ } 
+
++ [Back] -> CurrentLocation 
+ 
+   = DiceGame
+  -> DONE
+  
+   = RopeGame
+  -> DONE
+  
+  = FrisbeeGame
+  -> DONE
+  
+  = ChalkGame
+Dana: Ok, Let's play hopscotch then. I'll teach you how to play hopscotch.
+    + You need chalk and snacks -> chalk_second_step("snacks")
+    + You need chalk and a rock -> chalk_second_step("rock")
+    + You need chalk and eggs -> chalk_second_step("eggs")
+  -> DONE
+ 
+        = chalk_second_step(toy)
+        + Then, count how many snacks you have and draw that many squares in a column using your chalk. 
+        {toy == "snacks":
+            -> chalk_third_step(toy,true)
+        - else:
+            -> chalk_third_step(toy,false)
+            }
+        + Then, put the eggs on the ground and draw small squares around them.
+        {toy == "eggs":
+            -> chalk_third_step(toy,true)
+        - else:
+            -> chalk_third_step(toy,false)
+            }
+        + Then, use your chalks to draw ten squares all in a column, with some rows containing 2 squares.
+        {toy == "rock":
+            -> chalk_third_step(toy,true)
+        - else:
+            -> chalk_third_step(toy,false)
+            }
+        
+        
+    
+        = chalk_third_step(toy,gameSuccess)
+        + Now, everyone hops through the squares all at once, trying to pick up snacks. 
+        {toy == "snacks":
+            -> chalk_fourth_step(toy, gameSuccess)
+        - else:
+            -> chalk_fourth_step(toy, false)
+            }
+        + Now, toss the rock into a square and hop to the other end of the column, picking it up on your way back.
+        {toy == "rock":
+            -> chalk_fourth_step(toy, gameSuccess)
+        - else:
+            -> chalk_fourth_step(toy, false)
+            }
+        + Now, each player takes turns hopping through the egg squares, trying not to squash them.
+        {toy == "eggs":
+            -> chalk_fourth_step(toy, gameSuccess)
+        - else:
+            -> chalk_fourth_step(toy, false)
+            }
+        
+    
+        = chalk_fourth_step (toy, gameSuccess)
+        + You win if you pick up your rock without falling or tossing it outside of the column ten times.
+        {toy == "rock":
+            -> chalk_result(GameSuccess)
+        - else:
+            -> chalk_result(false)
+            }
+        + You win if you pick up the most snacks.
+        {toy == "snacks":
+            -> chalk_result(GameSuccess)
+        - else:
+            -> chalk_result(false)
+            }
+        + You win if you finish ten turns without breaking more than one egg.
+        {toy == "eggs":
+            -> chalk_result(GameSuccess)
+        - else:
+            -> chalk_result(false)
+            }
+            
+        = chalk_result(GameRight)
+        {GameRight:
+            {Partner}: {Ok, that makes sense! | Sure! | Sounds right to me!}
+            + One hour later -> GameSuccess
+        - else:
+            {Partner}: {That sounds wrong, but ok! | That doesn't sound right... | Really? Are you sure you know how to play?}
+            + [Try another game?]
+            -> Games
+            }
+    = GameSuccess
+    {Partner:
+    - "Jimmy": -> Jimmy_Success
+    }
+= Jimmy_Success    
+Kimmy:			You’re not bad at games Jimmy... I think you were good.
+Jimmy:			Oh! Thank you…
+Jimmy:			Did you get those toys at the corner store, Dana?
+Dana:			Yup! I had a little money saved up.
+Jimmy:			I save up my money for comics, but I’ve been saving up money for a Yo-yo lately.
+Kimmy:			I don’t have any money but my mom said that’s ok. I do sometimes wish I could buy more toys though...
+Jimmy:			You don’t get an allowance?
+Kimmy:			What’s an allowance?
+Dana:			A little money that your parents give you every week, usually.
+Kimmy:			Oh…
+Dana:			Don’t worry, not everyone gets allowance, Kimmy. Friends are better than money anyways, and we’re going to make lots of friends for you!
+Kimmy:			Ok…
 
 
+Jimmy:			Thanks for… playing nice and helping me because...
+Jimmy:			Because I get nervous because… kids tease me for being slow sometimes and…
+Dana:			They’re bullies. Don’t worry, you’re great. Right Kimmy?
+Kimmy:			Yup!
+Jimmy:			That’s nice of you…
+Kimmy:			Kids tease me too.
+Jimmy:			Why would they tease you? You’re so nice…
+Kimmy:			I don’t know…
+Kimmy:			People get mad and ask me if I know how to talk…
+Dana:			That’s so stupid. It’s ok to be quiet, don’t let them get to you.
+Dana:			If anyone tries to bully either of you, let me know. I’ll deal with them.
+Kimmy:			The boys might try to tear your shirt though.
+Dana:			I’m the fastest runner in school. They can’t touch me. I’ll tell them to shut up and then--
+Dana:			I mean I guess I’d just run away and tell my mom and dad…
+Dana:			I’m actually not that helpful with bullies, haha. They bug me too.
+Jimmy:			My mom says not to walk around too much alone.
+Dana:			Yes! Being with a buddy is a good idea.
+Jimmy:			Maybe next year at school, Kimmy… we can sit together at recess… I know that usually we’re both um… sitting alone… then maybe we won’t get picked on as much...
+Kimmy:			If you want, that sounds ok.
+Dana:			You’ve never played together at school before? You two should stick together!
+Jimmy:			W-well… we’ve only talked a couple times…
+Dana:			Haha that makes sense, you’re both pretty quiet.
+Jimmy:			Um, uh… will you…
+Jimmy:			Does that mean…
+Jimmy:			Uhhhh…
+Kimmy:			...
+Jimmy:			Will you be my friend, Kimmy?
+Kimmy:			...Ok.
+Dana:			Haha, you two...
+-> DONE
 
+    
+    = chalk_and_rock
+    -> DONE
+    = chalk_and_eggs
+    -> DONE
+    
+  = BallGame
+  -> DONE
+  
+  = NotepadGame
+  -> DONE
+ 
 -> DONE
 
 -> END
