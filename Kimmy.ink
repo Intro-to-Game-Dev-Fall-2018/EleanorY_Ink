@@ -127,18 +127,24 @@ Kimmy:			...!
     Dana:			...
     Dana:			Whatcha reading there, Jimmy? Looks neat.
     Jimmy:			M-my comic… Archie...
+        + [?] -> 2_2
+    = 2_2
     Dana:			Some of my friends at school read that! Did you get it at the bookstore?
     Jimmy:			Yeah!
     Kimmy:			I’ve never read a comic before.
     Jimmy:			Y-you can borrow one of mine whenever you like, Kimmy! And then we can uh…
     Jimmy:			We can talk about it and pick our--our favorite characters!
-    + [!] -> 2_2
-    = 2_2
+    + [!] -> 2_3
+    = 2_3
     Dana:			Wow! That’s so nice of you, Jimmy! Guess you have a new friend, Kimmy!
     Kimmy:			I think… that sounds fun...
     Jimmy:			A-anytime, anytime… um…
+    + [Wanna play?] -> 2_4
+    = 2_4
     Dana:			Say, are you free to play a game with us, Jimmy? We’ll teach you something new!
     Jimmy:			I’m not very good at games… b-but, if Kimmy wants me to...
+    + [Kimmy is learning, too] -> 2_5
+    = 2_5
     Dana:			I’m teaching Kimmy games and helping her make friends this summer.
     Jimmy:			If you’re learning games, can I play games with you on the playground sometimes too, Kimmy? Once school starts?
     Kimmy:			...Ok. I don’t play much at school but I will with you if you want.
@@ -455,9 +461,10 @@ Dana: Ok, Let's play hopscotch then. I'll teach you how to play hopscotch.
   -> DONE
  
         = chalk_second_step(toy)
-        + Then, count how many snacks you have and draw that many squares in a column using your chalk. 
+        + Then, count how many snacks you have and draw that many squares in a column using your chalk.
         {toy == "snacks":
-            -> chalk_third_step(toy,true)
+                you pick {toy}
+            -> chalk_third_step(toy, true)
         - else:
             -> chalk_third_step(toy,false)
             }
@@ -476,49 +483,50 @@ Dana: Ok, Let's play hopscotch then. I'll teach you how to play hopscotch.
         
         
     
-        = chalk_third_step(toy,gameSuccess)
+        = chalk_third_step(toy, gameState)
         + Now, everyone hops through the squares all at once, trying to pick up snacks. 
         {toy == "snacks":
-            -> chalk_fourth_step(toy, gameSuccess)
+        you pick {toy}
+            -> chalk_fourth_step(toy, gameState)
         - else:
             -> chalk_fourth_step(toy, false)
             }
         + Now, toss the rock into a square and hop to the other end of the column, picking it up on your way back.
         {toy == "rock":
-            -> chalk_fourth_step(toy, gameSuccess)
+            -> chalk_fourth_step(toy, gameState)
         - else:
             -> chalk_fourth_step(toy, false)
             }
         + Now, each player takes turns hopping through the egg squares, trying not to squash them.
         {toy == "eggs":
-            -> chalk_fourth_step(toy, gameSuccess)
+            -> chalk_fourth_step(toy, gameState)
         - else:
             -> chalk_fourth_step(toy, false)
             }
         
     
-        = chalk_fourth_step (toy, gameSuccess)
+        = chalk_fourth_step (toy, gameState)
         + You win if you pick up your rock without falling or tossing it outside of the column ten times.
         {toy == "rock":
-            -> chalk_result(GameSuccess)
+            -> chalk_result(gameState)
         - else:
             -> chalk_result(false)
             }
         + You win if you pick up the most snacks.
         {toy == "snacks":
-            -> chalk_result(GameSuccess)
+            -> chalk_result(gameState)
         - else:
             -> chalk_result(false)
             }
         + You win if you finish ten turns without breaking more than one egg.
         {toy == "eggs":
-            -> chalk_result(GameSuccess)
+            -> chalk_result(gameState)
         - else:
             -> chalk_result(false)
             }
             
-        = chalk_result(GameRight)
-        {GameRight:
+        = chalk_result(gameState)
+        {gameState:
             {Partner}: {Ok, that makes sense! | Sure! | Sounds right to me!}
             + One hour later -> GameSuccess
         - else:
@@ -534,11 +542,15 @@ Dana: Ok, Let's play hopscotch then. I'll teach you how to play hopscotch.
 Kimmy:			You’re not bad at games Jimmy... I think you were good.
 Jimmy:			Oh! Thank you…
 Jimmy:			Did you get those toys at the corner store, Dana?
++ [^_^] -> jimmy_success_1
+= jimmy_success_1
 Dana:			Yup! I had a little money saved up.
 Jimmy:			I save up my money for comics, but I’ve been saving up money for a Yo-yo lately.
 Kimmy:			I don’t have any money but my mom said that’s ok. I do sometimes wish I could buy more toys though...
 Jimmy:			You don’t get an allowance?
 Kimmy:			What’s an allowance?
++ [$$$] -> jimmy_success_2
+= jimmy_success_2
 Dana:			A little money that your parents give you every week, usually.
 Kimmy:			Oh…
 Dana:			Don’t worry, not everyone gets allowance, Kimmy. Friends are better than money anyways, and we’re going to make lots of friends for you!
@@ -547,6 +559,8 @@ Kimmy:			Ok…
 
 Jimmy:			Thanks for… playing nice and helping me because...
 Jimmy:			Because I get nervous because… kids tease me for being slow sometimes and…
++ [-^-] -> jimmy_success_3
+= jimmy_success_3
 Dana:			They’re bullies. Don’t worry, you’re great. Right Kimmy?
 Kimmy:			Yup!
 Jimmy:			That’s nice of you…
@@ -554,16 +568,24 @@ Kimmy:			Kids tease me too.
 Jimmy:			Why would they tease you? You’re so nice…
 Kimmy:			I don’t know…
 Kimmy:			People get mad and ask me if I know how to talk…
++ [ (`皿´) ] -> jimmy_success_4
+= jimmy_success_4
 Dana:			That’s so stupid. It’s ok to be quiet, don’t let them get to you.
 Dana:			If anyone tries to bully either of you, let me know. I’ll deal with them.
 Kimmy:			The boys might try to tear your shirt though.
++ [ヽ(｀Д´)ﾉ] -> jimmy_success_5
+= jimmy_success_5
 Dana:			I’m the fastest runner in school. They can’t touch me. I’ll tell them to shut up and then--
 Dana:			I mean I guess I’d just run away and tell my mom and dad…
 Dana:			I’m actually not that helpful with bullies, haha. They bug me too.
 Jimmy:			My mom says not to walk around too much alone.
++ [Yes!] -> jimmy_success_6
+= jimmy_success_6
 Dana:			Yes! Being with a buddy is a good idea.
 Jimmy:			Maybe next year at school, Kimmy… we can sit together at recess… I know that usually we’re both um… sitting alone… then maybe we won’t get picked on as much...
 Kimmy:			If you want, that sounds ok.
++ [^O^] -> jimmy_success_7
+= jimmy_success_7
 Dana:			You’ve never played together at school before? You two should stick together!
 Jimmy:			W-well… we’ve only talked a couple times…
 Dana:			Haha that makes sense, you’re both pretty quiet.
@@ -573,6 +595,8 @@ Jimmy:			Uhhhh…
 Kimmy:			...
 Jimmy:			Will you be my friend, Kimmy?
 Kimmy:			...Ok.
++ [lol] -> jimmy_success_8
+= jimmy_success_8
 Dana:			Haha, you two...
 -> DONE
 
