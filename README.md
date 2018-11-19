@@ -14,3 +14,18 @@
                - Click.
 
 ---
+
+[Ver1.1_20181119](https://jiaxi-yang.itch.io/kimmy-ver2)
+
+    What I added this week: 
+     - Dice game;
+     - Donna's dialogue;
+     - Anthony & Amber's dialogue;
+     - Coverted to Unity
+
+    Instruction:
+     - Click.
+          - Click.
+               - Click.
+
+---
