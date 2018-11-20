@@ -8,62 +8,67 @@ public class StoryController : MonoBehaviour {
 
 	
 	[SerializeField]
-	private TextAsset inkJSONAsset;
-	private Story story;
+	private TextAsset _inkJSONAsset;
+	private Story _story;
 
 	[SerializeField]
-	private GameObject canvasLayout;
+	private GameObject _choiceLayout;
+	[SerializeField]
+	private GameObject _dialoguePanel;
 
 	// UI Prefabs
 	[SerializeField]
-	private TextMeshProUGUI textPrefab;
+	private TextMeshProUGUI _textPrefab;
 	[SerializeField]
-	private Button buttonPrefab;
-	
-	
-	void Awake () {
-		// Remove the default message
+	private Button _buttonPrefab;
+
+	private bool _haveChoice;
+	private bool _needClick;
+
+
+	private void Awake () {
 		RemoveChildren();
 		StartStory();
 	}
 
 	// Creates a new Story object with the compiled story which we can then play!
-	void StartStory () {
-		story = new Story (inkJSONAsset.text);
-		RefreshView();
+	private void StartStory () {
+		_story = new Story (_inkJSONAsset.text);
 	}
-	
-	// This is the main function called every time the story changes. It does a few things:
-	// Destroys all the old content and choices.
-	// Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
-	void RefreshView () {
-		// Remove all the UI on screen
-		RemoveChildren ();
-		
-		// Read all the content until we can't continue any more
-		while (story.canContinue) {
-			// Continue gets the next line of the story
-			string text = story.Continue ();
-			// This removes any white space from the text.
+
+	private void Update()
+	{
+		if (_story.canContinue && !_needClick)
+		{
+			var text = _story.Continue();
 			text = text.Trim();
-			// Display the text on screen!
 			CreateContentView(text);
+			_needClick = true;
 		}
 
-		// Display all the choices, if there are any!
-		if(story.currentChoices.Count > 0) {
-			for (int i = 0; i < story.currentChoices.Count; i++) {
-				Choice choice = story.currentChoices [i];
-				Button button = CreateChoiceView (choice.text.Trim ());
-				// Tell the button what to do when we press it
+		if (_needClick && (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return)))
+		{
+			_needClick = false;
+			if (_story.currentChoices.Count > 0) return;
+			RemoveChildren();
+		}
+
+		if (_haveChoice) return;
+		if(_story.currentChoices.Count > 0)
+		{
+			foreach (var choice in _story.currentChoices)
+			{
+				var button = CreateChoiceView (choice.text.Trim ());
+				var choice1 = choice;
 				button.onClick.AddListener (delegate {
-					OnClickChoiceButton (choice);
+					OnClickChoiceButton (choice1);
 				});
 			}
+
+			_haveChoice = true;
 		}
-		// If we've read all the content and there's no choices, the story is finished!
-		else {
-			Button choice = CreateChoiceView("End of story.\nRestart?");
+		else if (_story.currentChoices.Count <= 0 && !_story.canContinue){
+			var choice = CreateChoiceView("End of story.\nRestart?");
 			choice.onClick.AddListener(delegate{
 				StartStory();
 			});
@@ -71,24 +76,28 @@ public class StoryController : MonoBehaviour {
 	}
 
 	// When we click the choice button, tell the story to choose that choice!
-	void OnClickChoiceButton (Choice choice) {
-//		Debug.Log("Click");
-		story.ChooseChoiceIndex (choice.index);
-		RefreshView();
+	private void OnClickChoiceButton (Choice choice) {
+		_story.ChooseChoiceIndex (choice.index);
+		RemoveChildren();
+		_haveChoice = false;
+		_needClick = false;
 	}
 
 	// Creates a button showing the choice text
-	void CreateContentView (string text) {
-		TextMeshProUGUI storyText = Instantiate (textPrefab);
+	private void CreateContentView (string text) {
+		
+		if(text.Contains("Kimmy:"))
+		{Debug.Log("This is Kimmy!");}
+		var storyText = Instantiate (_textPrefab);
 		storyText.text = text;
-		storyText.transform.SetParent (canvasLayout.transform, false);
+		storyText.transform.SetParent (_dialoguePanel.transform, false);
 	}
 
 	// Creates a button showing the choice text
-	Button CreateChoiceView (string text) {
+	private Button CreateChoiceView (string text) {
 		// Creates the button from a prefab
-		Button choice = Instantiate (buttonPrefab) as Button;
-		choice.transform.SetParent (canvasLayout.transform, false);
+		Button choice = Instantiate (_buttonPrefab) as Button;
+		choice.transform.SetParent (_choiceLayout.transform, false);
 		
 		// Gets the text from the button prefab
 		TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI> ();
@@ -101,11 +110,16 @@ public class StoryController : MonoBehaviour {
 		return choice;
 	}
 
-	// Destroys all the children of this gameobject (all the UI)
-	void RemoveChildren () {
-		int childCount = canvasLayout.transform.childCount;
-		for (int i = childCount - 1; i >= 0; --i) {
-			GameObject.Destroy (canvasLayout.transform.GetChild (i).gameObject);
+	private void RemoveChildren () {
+		var dialogueCount = _dialoguePanel.transform.childCount;
+		if (dialogueCount <= 0) return;
+		for (var i = dialogueCount - 1; i >= 0; --i) {
+			Destroy (_dialoguePanel.transform.GetChild (i).gameObject);
+		}
+		var choiceCount = _choiceLayout.transform.childCount;
+		if (choiceCount <= 0) return;
+		for (var i = choiceCount - 1; i >= 0; --i) {
+			Destroy (_choiceLayout.transform.GetChild (i).gameObject);
 		}
 	}
 }
