@@ -4,12 +4,28 @@ using System.Collections;
 using Ink.Runtime;
 using TMPro;
 
-public class StoryController : MonoBehaviour {
+public class StoryController : MonoBehaviour
+{
+	private bool _hasKimmy;
+	private bool _hasDana;
+	private bool _hasDonna;
+	private bool _hasMom;
+	private bool _hasKimmyMom;
+	private bool _hasJimmy;
 
+	[SerializeField] private Vector3 _inversedKimmy;
+	
+	
+	
+	private bool _KimmyInverse;
 	
 	[SerializeField]
 	private TextAsset _inkJSONAsset;
 	private Story _story;
+	
+	[SerializeField]
+	private SpriteSetting _sprite;
+	
 
 	[SerializeField]
 	private GameObject _choiceLayout;
@@ -29,6 +45,7 @@ public class StoryController : MonoBehaviour {
 	private void Awake () {
 		RemoveChildren();
 		StartStory();
+		Destroy(GameObject.FindWithTag("Char"));
 	}
 
 	// Creates a new Story object with the compiled story which we can then play!
@@ -84,10 +101,76 @@ public class StoryController : MonoBehaviour {
 	}
 
 	// Creates a button showing the choice text
-	private void CreateContentView (string text) {
+	private void CreateContentView (string text)
+	{
+		if (text.Contains("Kimmy:"))
+		{
+			Destroy(GameObject.FindWithTag("Mark"));
+			if (!_KimmyInverse)
+			{
+				Instantiate(_sprite.Sprite.KimmyMark);
+				if (!_hasKimmy)
+				{
+					Instantiate(_sprite.Sprite.Kimmy);
+					_hasKimmy = true;
+				}
+			}
+			else
+			{
+				var kimmyMark = Instantiate(_sprite.Sprite.KimmyMark, _inversedKimmy, Quaternion.identity);
+				kimmyMark.transform.localScale = new Vector3(-1, 1, 1);
+				if (!_hasKimmy)
+				{
+					var kimmy = Instantiate(_sprite.Sprite.Kimmy, _inversedKimmy, Quaternion.identity);
+					kimmy.transform.localScale = new Vector3(-1, 1, 1);
+					_hasKimmy = true;
+				}
+			}
+			
+		}
+
+		if (text.Contains("Dana:"))
+		{
+			Destroy(GameObject.FindWithTag("Mark"));
+			if (!_hasDana)
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				_hasDana = true;
+			}
+			Instantiate(_sprite.Sprite.DanaMark);
+		}
+		if (text.Contains("Mom:"))
+		{
+			Destroy(GameObject.FindWithTag("Mark"));
+			if (!_hasMom)
+			{
+				Instantiate(_sprite.Sprite.Mom);
+				_hasMom = true;
+			}
+			Instantiate(_sprite.Sprite.MomMark);
+		}
+
+		if (text.Contains("Kimmy's mom:") || text.Contains("Mrs. Munro:") )
+		{
+			Destroy(GameObject.FindWithTag("Mark"));
+			if (!_hasKimmyMom)
+			{
+				Instantiate(_sprite.Sprite.KimmyMom);
+				_hasKimmyMom = true;
+			}
+			Instantiate(_sprite.Sprite.KimmyMomMark);
+		}
 		
-		if(text.Contains("Kimmy:"))
-		{Debug.Log("This is Kimmy!");}
+		if (text.Contains("Kimmy's House"))
+		{
+			ClearSprites();
+		}
+		if (text.Contains("The Next Morning"))
+		{
+			ClearSprites();
+			_KimmyInverse = true;
+		}
+		
 		var storyText = Instantiate (_textPrefab);
 		storyText.text = text;
 		storyText.transform.SetParent (_dialoguePanel.transform, false);
@@ -121,6 +204,21 @@ public class StoryController : MonoBehaviour {
 		for (var i = choiceCount - 1; i >= 0; --i) {
 			Destroy (_choiceLayout.transform.GetChild (i).gameObject);
 		}
+	}
+
+	private void ClearSprites()
+	{
+		var sprites = GameObject.FindGameObjectsWithTag("Char");
+		foreach (var sprite in sprites)
+		{
+			Destroy(sprite.gameObject);
+		}
+		Destroy(GameObject.FindWithTag("Mark"));
+		_hasDana = false;
+		_hasKimmy = false;
+		_hasMom = false;
+		_hasKimmyMom = false;
+		_hasJimmy = false;
 	}
 }
 

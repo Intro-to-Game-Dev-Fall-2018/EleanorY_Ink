@@ -1,20 +1,17 @@
 VAR money = 25
 VAR DiceNum = 2
-VAR RopeNum = 2
-VAR FrisbeeNum = 1
+#VAR RopeNum = 2
+#VAR FrisbeeNum = 1
 VAR ChalkNum = 1
-VAR BallNum = 1
-VAR NotepadNum = 1
+#VAR BallNum = 1
+#VAR NotepadNum = 1
 
 VAR HaveGame = false
 VAR CurrentLocation = -> Map
 
 VAR Partner = "Kimmy"
 
-Kimmy
-+ [Start Game] -> Start
 
-=== Start ===
 Dana:			Mom! Look! God sent me a baby!
 Mom:			...Excuse me?
 Dana:			Her name is Kimmy!
@@ -38,11 +35,12 @@ Kimmy:		Ferry Street... I untied myself from the porch so I could go for a walk.
 Dana:			...
 Mom:			It’s ok deear, let’s go to your house Kimmy... you said it’s on Ferry Street? Your parents are probably worried.
 
-+ Kimmy's House 
++ [Kimmy's House] 
 
 -> KimmysHouse
 
 == KimmysHouse ===
+Kimmy's House
 Dana:			I’m sorry... I thought God sent me a baby and I got so excited...
 Kimmy's mom:	Oh, don’t worry. Thank you for finding Kimmy and walking her home. What's your name, dear?
 + [I'm Dana] ->0_4
@@ -69,11 +67,12 @@ Mrs. Munro:		Mrs. Munro. Again, thank you for giving Kimmy a hand. It was nice m
 Mom:			Likewise.
 Kimmy:		Bye bye.
 
-+ The Next Morning
++ [The Next Morning]
 -> Day1
 
 
 === Day1 ===
+The Next Morning
 Dana:			Mornin’ Kimmy! I’m here to babysit, like I promised! Is your mom around?
 Kimmy:		My mommy’s not inside. She left already.
 + [...] ->1_0
@@ -110,12 +109,6 @@ Kimmy:		...!
 
 + Downtown
 -> Downtown
-   
-+ Home
--> Home
-
-+ Playground
--> Playground
 
 + [Kimmy's House]
 -> KimmyHouseDay1
@@ -192,23 +185,6 @@ Kimmy:		...!
     Amber:		Am not!
     -> CheckInventory
 
- ->DONE
-=== Home ===
-~ CurrentLocation = -> Home
-This area is blocked by a myterious force.
-
-+ [Back]
-    -> Map
-    
- ->DONE
-
-=== Playground ===
-~ CurrentLocation = -> Playground
-This area is blocked by a myterious force.
-
-+ [Back]
-    -> Map
-    
  ->DONE
  
 === KimmyHouseDay1 ===
@@ -293,21 +269,21 @@ Dana and Kimmy now have {money} cents in their pocket.
         {DiceNum > 0:
             + [Buy a Dice] -> BuyDice
             }
-        {RopeNum > 0: 
-            + [Buy a Rope] -> BuyRope
-            }
-        {FrisbeeNum > 0:
-            + [Buy a Frisbee] -> BuyFrisbee
-            }
-        {BallNum > 0:
-            + [Buy a Ball] -> BuyBall
-            }
+#        {RopeNum > 0: 
+#            + [Buy a Rope] -> BuyRope
+#            }
+#        {FrisbeeNum > 0:
+#            + [Buy a Frisbee] -> BuyFrisbee
+#            }
+#        {BallNum > 0:
+#            + [Buy a Ball] -> BuyBall
+#            }
         {ChalkNum > 0:
             + [Buy Chalks] -> BuyChalks
             }
-        {NotepadNum > 0:
-            + [Buy a NotePad] -> BuyNotePad
-            }
+#        {NotepadNum > 0:
+#            + [Buy a NotePad] -> BuyNotePad
+#            }
         + [Exit Shop]
             -> KimmyHouseDay1
 
@@ -330,35 +306,35 @@ Dana and Kimmy now have {money} cents in their pocket.
             -> KimmyHouseDay1
         -> DONE
         
-    = BuyFrisbee 
-        { money - 5 >= 0: 
-            ~ money = money - 5
-            ~ FrisbeeNum = FrisbeeNum - 1
-            ~ HaveGame = true
-            Danna buys a frisbee. Danna has {money} cents left.
-          - else:
-            Danna doesn't have enough money!
-          }
-        + [Buy More]
-            -> List
-        + [Exit Shop]
-            -> KimmyHouseDay1
-        -> DONE
+#    = BuyFrisbee 
+#        { money - 5 >= 0: 
+#            ~ money = money - 5
+#            ~ FrisbeeNum = FrisbeeNum - 1
+#            ~ HaveGame = true
+#            Danna buys a frisbee. Danna has {money} cents left.
+#          - else:
+#            Danna doesn't have enough money!
+#          }
+#        + [Buy More]
+#            -> List
+#        + [Exit Shop]
+#            -> KimmyHouseDay1
+#        -> DONE
         
-    = BuyBall 
-        { money - 3 >= 0: 
-           ~ money = money - 3
-           ~ BallNum = BallNum - 1
-           ~ HaveGame = true
-            Danna buys a ball. Danna has {money} cents left.
-          - else:
-            Danna doesn't have enough money!
-          }
-        + [Buy More]
-            -> List
-        + [Exit Shop]
-            -> ExitShop
-        -> DONE
+#   = BuyBall 
+#        { money - 3 >= 0: 
+#           ~ money = money - 3
+#           ~ BallNum = BallNum - 1
+#           ~ HaveGame = true
+#            Danna buys a ball. Danna has {money} cents left.
+#          - else:
+#            Danna doesn't have enough money!
+#         }
+#        + [Buy More]
+#            -> List
+#        + [Exit Shop]
+#            -> ExitShop
+#        -> DONE
 
     = BuyChalks
         { money - 6 >= 0: 
@@ -375,35 +351,35 @@ Dana and Kimmy now have {money} cents in their pocket.
             -> ExitShop
         -> DONE
     
-    = BuyNotePad
-        { money - 3 >= 0: 
-            ~ money = money - 3
-            ~ NotepadNum = NotepadNum - 1
-            ~ HaveGame = true
-            Danna buys a notepad. Danna has {money} cents left.
-          - else:
-            Danna doesn't have enough money!
-          }
-        + [Buy More]
-            -> List
-        + [Exit Shop]
-            -> ExitShop
-        -> DONE
+ #   = BuyNotePad
+ #       { money - 3 >= 0: 
+ #           ~ money = money - 3
+ #           ~ NotepadNum = NotepadNum - 1
+ #           ~ HaveGame = true
+ #           Danna buys a notepad. Danna has {money} cents left.
+ #         - else:
+ #           Danna doesn't have enough money!
+ #         }
+ #       + [Buy More]
+ #           -> List
+ #       + [Exit Shop]
+ #           -> ExitShop
+ #       -> DONE
         
-    = BuyRope
-        { money - 4 >= 0: 
-            ~ money = money - 4
-            ~ RopeNum = RopeNum - 1
-            ~ HaveGame = true
-            Danna buys a Rope. Danna has {money} cents left.
-          - else:
-            Danna doesn't have enough money!
-          }
-        + [Buy More]
-            -> List
-        + [Exit Shop]
-            -> ExitShop
-        -> DONE
+  #  = BuyRope
+  #      { money - 4 >= 0: 
+  #          ~ money = money - 4
+  #          ~ RopeNum = RopeNum - 1
+  #         ~ HaveGame = true
+ #           Danna buys a Rope. Danna has {money} cents left.
+ #         - else:
+ #           Danna doesn't have enough money!
+ #         }
+ #       + [Buy More]
+ #           -> List
+ #       + [Exit Shop]
+ #           -> ExitShop
+ #       -> DONE
 
 
 = ExitShop
@@ -436,28 +412,28 @@ Dana:			It’s ok! Kimmy, let’s run to the store and buy some game pieces! We�
     <> 1 dice,
     }
     
- {  RopeNum:
- - 0 :
-    <> 2 ropes,
- - 1:
-    <> 1 rope,
-    }
+ #{  RopeNum:
+ #- 0 :
+ #   <> 2 ropes,
+ #- 1:
+ #   <> 1 rope,
+ #   }
     
- { FrisbeeNum == 0:
-    <> 1 frisbee,
- }
+ #{ FrisbeeNum == 0:
+ #   <> 1 frisbee,
+ #}
  
   { ChalkNum == 0:
    <> 1 box of chalks,
  }
  
-  { BallNum == 0:
-   <> 1 ball,
- }
+#  { BallNum == 0:
+#   <> 1 ball,
+# }
  
-  { NotepadNum == 0:
-   <> 1 notepad,
- } 
+#  { NotepadNum == 0:
+#  <> 1 notepad,
+# } 
  <> in your inventory.
 
 -> Games
@@ -468,25 +444,25 @@ What do you want to play with?
     + [Dice] -> DiceGame
     }
     
- {  RopeNum < 2:
-    + [Rope] -> RopeGame
-    }
+# {  RopeNum < 2:
+#    + [Rope] -> RopeGame
+#    }
     
- { FrisbeeNum == 0:
-   + [Frisbee] -> FrisbeeGame
- }
+# { FrisbeeNum == 0:
+#   + [Frisbee] -> FrisbeeGame
+# }
  
   { ChalkNum == 0:
    + [Chalk] -> ChalkGame
  }
  
-  { BallNum == 0:
-   + [Ball] -> BallGame
- }
+#  { BallNum == 0:
+#   + [Ball] -> BallGame
+# }
  
-  { NotepadNum == 0:
-   + [Notepad] -> NotepadGame
- } 
+#  { NotepadNum == 0:
+#   + [Notepad] -> NotepadGame
+# } 
 
 + [Back] -> CurrentLocation 
  

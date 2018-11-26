@@ -173,7 +173,7 @@ Prefab:
     - target: {fileID: 224933620580518268, guid: a792afd8f7e604ef3b061c230d558da9,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 780
+      value: 380
       objectReference: {fileID: 0}
     - target: {fileID: 224933620580518268, guid: a792afd8f7e604ef3b061c230d558da9,
         type: 2}
@@ -248,6 +248,26 @@ Prefab:
     - target: {fileID: 224202823490334156, guid: a792afd8f7e604ef3b061c230d558da9,
         type: 2}
       propertyPath: m_SizeDelta.y
+      value: 22.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220994794097234, guid: a792afd8f7e604ef3b061c230d558da9,
+        type: 2}
+      propertyPath: m_ChildControlWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220994794097234, guid: a792afd8f7e604ef3b061c230d558da9,
+        type: 2}
+      propertyPath: m_ChildForceExpandWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220994794097234, guid: a792afd8f7e604ef3b061c230d558da9,
+        type: 2}
+      propertyPath: m_ChildForceExpandHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220994794097234, guid: a792afd8f7e604ef3b061c230d558da9,
+        type: 2}
+      propertyPath: m_ChildControlHeight
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -280,7 +300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ce71f95b1d247d181c864ffa059ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inversedKimmy: {x: 5.5, y: -4.5, z: 0}
   _inkJSONAsset: {fileID: 4900000, guid: 542eef21825f747239e45808a2142391, type: 3}
+  _sprite: {fileID: 11400000, guid: 6e843cc91f12b46feac69849b3e44ef5, type: 2}
   _choiceLayout: {fileID: 624701380}
   _dialoguePanel: {fileID: 1741505458}
   _textPrefab: {fileID: 114676770192510948, guid: 67cf8e417989c4013aee8a6da94fadab,
@@ -411,8 +433,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 150}
+  m_AnchoredPosition: {x: 0, y: -71.3}
+  m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &624701382
 MonoBehaviour:
@@ -635,7 +657,7 @@ Prefab:
     - target: {fileID: 224795213189116556, guid: 67cf8e417989c4013aee8a6da94fadab,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 150
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 224795213189116556, guid: 67cf8e417989c4013aee8a6da94fadab,
         type: 2}
@@ -775,8 +797,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 74.99997}
-  m_SizeDelta: {x: 800, y: 150}
+  m_AnchoredPosition: {x: 0, y: 350}
+  m_SizeDelta: {x: 800, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1741505460
 MonoBehaviour:
@@ -790,7 +812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19010323, g: 0.33119738, b: 0.4528302, a: 0.05490196}
+  m_Color: {r: 0.49803925, g: 0.50980395, b: 0.58431375, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

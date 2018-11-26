@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1014909a0d54b72a24828e75bb605b, type: 3}
+  m_Name: SpriteSettings
+  m_EditorClassIdentifier: 
+  Sprite:
+    Kimmy: {fileID: 1151941826092156, guid: 49bf35cd03876482b808d0479625cfb3, type: 2}
+    KimmyMark: {fileID: 1274503040355946, guid: 57ed60e734fec41c2b1d4b43e6733ec2,
+      type: 2}
+    Dana: {fileID: 1839009759551758, guid: 9b071ab121e144369bdd9375fb637086, type: 2}
+    DanaMark: {fileID: 1343675316756756, guid: c7ee6f9c7befc4853a241e65e3683227, type: 2}
+    Mom: {fileID: 1018591559179354, guid: c285b2e4ee2ef4ba29f2f4d033e6cb9d, type: 2}
+    MomMark: {fileID: 1666109458321510, guid: fa4284524e5774cd98cc820dd7235556, type: 2}
+    KimmyMom: {fileID: 1458860784137396, guid: 4f8a593ba5a8e4ad29831acc608d2ddc, type: 2}
+    KimmyMomMark: {fileID: 1655196534995674, guid: ba1fa940177a649afa520b66836baa00,
+      type: 2}
