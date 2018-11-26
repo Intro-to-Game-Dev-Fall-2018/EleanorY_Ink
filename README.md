@@ -30,7 +30,7 @@
 
 ---
 
-[Ver1.3_20181119](https://jiaxi-yang.itch.io/kimmy-13)
+[Ver1.3_20181119](https://jiaxi-yang.itch.io/kimmy-ver13)
 
     What I added this week: 
      - Sprites;
