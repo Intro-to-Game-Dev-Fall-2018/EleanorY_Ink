@@ -15,7 +15,7 @@
 
 ---
 
-[Ver1.1_20181119](https://jiaxi-yang.itch.io/kimmy-ver2)
+[Ver1.2_20181119](https://jiaxi-yang.itch.io/kimmy-ver2)
 
     What I added this week: 
      - Dice game;
@@ -27,5 +27,13 @@
      - Click.
           - Click.
                - Click.
+
+---
+
+[Ver1.3_20181119](https://jiaxi-yang.itch.io/kimmy-13)
+
+    What I added this week: 
+     - Sprites;
+     - Title
 
 ---
