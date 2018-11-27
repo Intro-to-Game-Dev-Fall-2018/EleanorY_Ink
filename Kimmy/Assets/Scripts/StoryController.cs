@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using Ink.Runtime;
 using TMPro;
 
@@ -13,10 +12,10 @@ public class StoryController : MonoBehaviour
 	private bool _hasKimmyMom;
 	private bool _hasJimmy;
 
-	[SerializeField] private Vector3 _inversedKimmy;
 	
-	
-	
+	private Vector2 _textRectPivot;
+	private bool _textRight; 
+
 	private bool _KimmyInverse;
 	
 	[SerializeField]
@@ -77,6 +76,7 @@ public class StoryController : MonoBehaviour
 			{
 				var button = CreateChoiceView (choice.text.Trim ());
 				var choice1 = choice;
+
 				button.onClick.AddListener (delegate {
 					OnClickChoiceButton (choice1);
 				});
@@ -100,10 +100,9 @@ public class StoryController : MonoBehaviour
 		_needClick = false;
 	}
 
-	// Creates a button showing the choice text
 	private void CreateContentView (string text)
 	{
-		if (text.Contains("Kimmy:"))
+		if (_story.currentTags.Contains("Kimmy"))
 		{
 			Destroy(GameObject.FindWithTag("Mark"));
 			if (!_KimmyInverse)
@@ -114,22 +113,26 @@ public class StoryController : MonoBehaviour
 					Instantiate(_sprite.Sprite.Kimmy);
 					_hasKimmy = true;
 				}
+				_textRectPivot = _sprite.Dialogue.Kimmy;
+				_textRight = false;
 			}
 			else
 			{
-				var kimmyMark = Instantiate(_sprite.Sprite.KimmyMark, _inversedKimmy, Quaternion.identity);
+				var kimmyMark = Instantiate(_sprite.Sprite.KimmyMark, _sprite.Sprite.InverseKimmy, Quaternion.identity);
 				kimmyMark.transform.localScale = new Vector3(-1, 1, 1);
 				if (!_hasKimmy)
 				{
-					var kimmy = Instantiate(_sprite.Sprite.Kimmy, _inversedKimmy, Quaternion.identity);
+					var kimmy = Instantiate(_sprite.Sprite.Kimmy, _sprite.Sprite.InverseKimmy, Quaternion.identity);
 					kimmy.transform.localScale = new Vector3(-1, 1, 1);
 					_hasKimmy = true;
 				}
+				_textRectPivot = _sprite.Dialogue.KimmyInverse;
+				_textRight = true;
 			}
-			
+
 		}
 
-		if (text.Contains("Dana:"))
+		if (_story.currentTags.Contains("Dana"))
 		{
 			Destroy(GameObject.FindWithTag("Mark"));
 			if (!_hasDana)
@@ -138,8 +141,11 @@ public class StoryController : MonoBehaviour
 				_hasDana = true;
 			}
 			Instantiate(_sprite.Sprite.DanaMark);
+			_textRectPivot = _sprite.Dialogue.Dana;
+			_textRight = false;
 		}
-		if (text.Contains("Mom:"))
+		
+		if (_story.currentTags.Contains("Mom"))
 		{
 			Destroy(GameObject.FindWithTag("Mark"));
 			if (!_hasMom)
@@ -148,9 +154,11 @@ public class StoryController : MonoBehaviour
 				_hasMom = true;
 			}
 			Instantiate(_sprite.Sprite.MomMark);
+			_textRectPivot = _sprite.Dialogue.Mom;
+			_textRight = true;
 		}
 
-		if (text.Contains("Kimmy's mom:") || text.Contains("Mrs. Munro:") )
+		if (_story.currentTags.Contains("kimmyMom") )
 		{
 			Destroy(GameObject.FindWithTag("Mark"));
 			if (!_hasKimmyMom)
@@ -159,6 +167,8 @@ public class StoryController : MonoBehaviour
 				_hasKimmyMom = true;
 			}
 			Instantiate(_sprite.Sprite.KimmyMomMark);
+			_textRectPivot = _sprite.Dialogue.KimmyMom;
+			_textRight = true;
 		}
 		
 		if (text.Contains("Kimmy's House"))
@@ -172,6 +182,9 @@ public class StoryController : MonoBehaviour
 		}
 		
 		var storyText = Instantiate (_textPrefab);
+		storyText.rectTransform.pivot = _textRectPivot;
+		storyText.rectTransform.anchoredPosition = Vector2.zero;
+		storyText.alignment = _textRight ? TextAlignmentOptions.Right : TextAlignmentOptions.Left;
 		storyText.text = text;
 		storyText.transform.SetParent (_dialoguePanel.transform, false);
 	}
@@ -179,7 +192,7 @@ public class StoryController : MonoBehaviour
 	// Creates a button showing the choice text
 	private Button CreateChoiceView (string text) {
 		// Creates the button from a prefab
-		Button choice = Instantiate (_buttonPrefab) as Button;
+		Button choice = Instantiate (_buttonPrefab);
 		choice.transform.SetParent (_choiceLayout.transform, false);
 		
 		// Gets the text from the button prefab
@@ -191,8 +204,9 @@ public class StoryController : MonoBehaviour
 		layoutGroup.childForceExpandHeight = false;
 
 		return choice;
+		 
 	}
-
+	
 	private void RemoveChildren () {
 		var dialogueCount = _dialoguePanel.transform.childCount;
 		if (dialogueCount <= 0) return;
@@ -213,6 +227,7 @@ public class StoryController : MonoBehaviour
 		{
 			Destroy(sprite.gameObject);
 		}
+
 		Destroy(GameObject.FindWithTag("Mark"));
 		_hasDana = false;
 		_hasKimmy = false;
@@ -220,6 +235,8 @@ public class StoryController : MonoBehaviour
 		_hasKimmyMom = false;
 		_hasJimmy = false;
 	}
+
+
 }
 
 
