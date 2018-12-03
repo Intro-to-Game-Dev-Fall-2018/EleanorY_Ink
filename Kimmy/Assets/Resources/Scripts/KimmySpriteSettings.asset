@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1014909a0d54b72a24828e75bb605b, type: 3}
+  m_Name: KimmySpriteSettings
+  m_EditorClassIdentifier: 
+  Sprite:
+    Kimmy: {fileID: 1151941826092156, guid: 49bf35cd03876482b808d0479625cfb3, type: 2}
+    KimmyMark: {fileID: 1274503040355946, guid: 57ed60e734fec41c2b1d4b43e6733ec2,
+      type: 2}
+    Dana: {fileID: 1839009759551758, guid: 9b071ab121e144369bdd9375fb637086, type: 2}
+    DanaMark: {fileID: 1343675316756756, guid: c7ee6f9c7befc4853a241e65e3683227, type: 2}
+    Mom: {fileID: 1018591559179354, guid: c285b2e4ee2ef4ba29f2f4d033e6cb9d, type: 2}
+    MomMark: {fileID: 1666109458321510, guid: fa4284524e5774cd98cc820dd7235556, type: 2}
+    KimmyMom: {fileID: 1458860784137396, guid: 4f8a593ba5a8e4ad29831acc608d2ddc, type: 2}
+    KimmyMomMark: {fileID: 1655196534995674, guid: ba1fa940177a649afa520b66836baa00,
+      type: 2}
+    Jimmy: {fileID: 1465188134606162, guid: 517bd0ca2a3ac4c578174ce879311ca6, type: 2}
+    JimmyMark: {fileID: 1644823785404208, guid: e93907ffafd544afc8d9ad7239d11302,
+      type: 2}
+    Donna: {fileID: 1106250275370190, guid: 865709e4735924877b39a4d21a235b68, type: 2}
+    DonnaMark: {fileID: 1871717006096772, guid: 997f93137a1664d9ca6236d220861629,
+      type: 2}
+    Anthony: {fileID: 1918893854216464, guid: 23bff0cecf70e444fa07fe762acc5345, type: 2}
+    AnthonyMark: {fileID: 1119974917078692, guid: 415739235abf449a9a2fee6852d2d552,
+      type: 2}
+    Amber: {fileID: 1832367774281858, guid: 8f8df7ccbd3a24049bc2ce8033d55962, type: 2}
+    AmberMark: {fileID: 1914043955029520, guid: 297caac7064cc46759c6d908918fd4dc,
+      type: 2}
+    Dean: {fileID: 1658135417835058, guid: e5b2fa465ccb2482392bd5787f640a94, type: 2}
+    DeanMark: {fileID: 1873675051468614, guid: c0e1c31421e6046e0808ab338fcf32dc, type: 2}
+    InverseKimmy: {x: 5.5, y: -4.5, z: 0}
+  Dialogue:
+    Kimmy: {x: 0.8, y: 1.1}
+    KimmyInverse: {x: 0.45, y: 1.1}
+    Dana: {x: 0.6, y: 0.9}
+    Mom: {x: 0.45, y: 0.35}
+    KimmyMom: {x: 0.2, y: 0.35}
+    Jimmy: {x: 0.45, y: 0.7}
+    Donna: {x: 0.45, y: 0.9}
+    Anthony: {x: 0.2, y: 0.7}
+    Amber: {x: 0.45, y: 1}
+    Dean: {x: 0.45, y: 0.35}
+  Scene:
+    TheNextMorning: {fileID: 1928222415723334, guid: 035915293b0284f45890b320cd1152fe,
+      type: 2}
+    DowntownText: {fileID: 1275274001967932, guid: 6de222e17477a42acaac0f491d50e3d6,
+      type: 2}
+    DowntownPic: {fileID: 1300945043046042, guid: 25ed46749507c4fb58352981b1701c4a,
+      type: 2}
+    KimmyHouse: {fileID: 1674308494893016, guid: cd87871d37a6c4d7d9501aee2eb45d16,
+      type: 2}
+    KHD1Pic: {fileID: 1372369032303104, guid: b67f332421a2b41b38ee0dcedde5d034, type: 2}
+    KHD1Text: {fileID: 1862658824373692, guid: 7656a4a0b9f604d35b4ed5e104c4a5be, type: 2}

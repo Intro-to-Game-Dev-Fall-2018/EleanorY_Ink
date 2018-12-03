@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: a3ce71f95b1d247d181c864ffa059ff5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _inkJSONAsset: {instanceID: 0}
+  - _sprite: {instanceID: 0}
+  - _choiceLayout: {instanceID: 0}
+  - _dialoguePanel: {instanceID: 0}
+  - _canvas: {instanceID: 0}
+  - _textPrefab: {instanceID: 0}
+  - _buttonPrefab: {fileID: 114476279204398532, guid: a792afd8f7e604ef3b061c230d558da9,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

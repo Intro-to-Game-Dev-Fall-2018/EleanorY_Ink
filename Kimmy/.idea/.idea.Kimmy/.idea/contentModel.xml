@@ -86,11 +86,15 @@
             </e>
           </e>
         </e>
-        <e p="Scripts" t="Include">
-          <e p="ButtonController.cs" t="Include" />
-          <e p="SpriteSetting.cs" t="Include" />
-          <e p="StoryController.cs" t="Include" />
-          <e p="Title.cs" t="Include" />
+        <e p="Resources" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="AudioController.cs" t="Include" />
+            <e p="ButtonController.cs" t="Include" />
+            <e p="SceneTransition.cs" t="Include" />
+            <e p="SpriteSetting.cs" t="Include" />
+            <e p="StoryController.cs" t="Include" />
+            <e p="Title.cs" t="Include" />
+          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Resources" t="Include">

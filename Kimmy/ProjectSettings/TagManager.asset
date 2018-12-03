@@ -7,6 +7,10 @@ TagManager:
   - Char
   - Mark
   - ChoiceText
+  - Story
+  - Transition
+  - Background
+  - Music
   layers:
   - Default
   - TransparentFX
@@ -43,4 +47,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Character
+    uniqueID: 1500665889
     locked: 0
