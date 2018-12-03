@@ -37,3 +37,13 @@
      - Title
 
 ---
+
+[Ver1.4_20181203](https://jiaxi-yang.itch.io/kimmy-ver14)
+
+    What I added this week: 
+     - More Sprites;
+     - Corresponding text position;
+     - Location Backgrounds;
+     - Music;
+     
+---
