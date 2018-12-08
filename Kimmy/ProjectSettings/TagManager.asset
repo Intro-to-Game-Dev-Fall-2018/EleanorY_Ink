@@ -11,6 +11,7 @@ TagManager:
   - Transition
   - Background
   - Music
+  - SFX
   layers:
   - Default
   - TransparentFX

@@ -59,3 +59,7 @@ MonoBehaviour:
       type: 2}
     KHD1Pic: {fileID: 1372369032303104, guid: b67f332421a2b41b38ee0dcedde5d034, type: 2}
     KHD1Text: {fileID: 1862658824373692, guid: 7656a4a0b9f604d35b4ed5e104c4a5be, type: 2}
+    Shop: {fileID: 1485117103235488, guid: 4c4158549f6694eba9158760c94e4850, type: 2}
+    Home: {fileID: 1581466253938408, guid: 243abd2324bc94e779c74b277a4bc166, type: 2}
+    KimmyHomePic: {fileID: 1596871353311788, guid: 73d214aed256d46f29b2e78faedeb610,
+      type: 2}

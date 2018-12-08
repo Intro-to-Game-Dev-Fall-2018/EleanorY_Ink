@@ -13,6 +13,7 @@ namespace Resources.Scripts
 		private void Awake()
 		{
 			_choice = GetComponentInChildren<TextMeshProUGUI>();
+			_choice.faceColor = Color.black;
 		}
 
 		public void OnPointerEnter(PointerEventData pointerEventData)

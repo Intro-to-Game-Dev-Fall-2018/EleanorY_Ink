@@ -64,6 +64,9 @@ public class SpriteSetting : ScriptableObject
 		public GameObject KimmyHouse;
 		public GameObject KHD1Pic;
 		public GameObject KHD1Text;
+		public GameObject Shop;
+		public GameObject Home;
+		public GameObject KimmyHomePic;
 	}
 }
 

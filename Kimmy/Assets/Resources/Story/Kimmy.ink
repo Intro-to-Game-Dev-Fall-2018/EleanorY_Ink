@@ -8,7 +8,18 @@ VAR CurrentLocation = -> Map
 
 VAR Partner = "Kimmy"
 
- #Dana
+
+        + You win if you pick up your rock without falling or tossing it outside of the column ten times.#Dana 
+        -> Home
+        + You win if you pick up the most snacks. #Dana
+        -> Home
+        + You win if you finish ten turns without breaking more than one egg. #Dana
+        -> Home
+  
+
+=== Home ===
+#Home
+#Dana
 Mom! Look! God sent me a baby!
  #Mom
  ...Excuse me?
@@ -66,9 +77,9 @@ you said it’s on Ferry Street? Your parents are probably worried.
 -> KimmysHouse
 
 == KimmysHouse ===
- #KimmyHouse
+ #KimmyHouseTransition
  Kimmy's House
- #Dana
+ #Dana #KimmyHouse
  I’m sorry... I thought God sent me a baby and I got so excited...
 #kimmyMom
 Oh, don’t worry. 
@@ -130,7 +141,7 @@ Bye bye.
 === Day1 ===
 #TheNextMorning
 theNextMorning.
- #Dana
+ #Dana #WithKimmy
 Mornin’ Kimmy! I’m here to babysit, like I promised! 
  #Dana
 Is your mom around?
@@ -203,8 +214,9 @@ I don’t think Donna is my friend though, so she probably wouldn’t want to pl
  #Downtown
  Downtown
  ~ CurrentLocation = -> Downtown
+ 
+ 
  #General 
-What do you want to do?
 
  + [Talk to Jimmy]
         -> Jimmy
@@ -215,6 +227,8 @@ What do you want to do?
     
     = Jimmy
     ~Partner = "Jimmy"
+    
+    #WithJimmy
     #Jimmy
     ...Hi Kimmy.
     #Kimmy
@@ -251,10 +265,12 @@ What do you want to do?
 ...Ok. I don’t play much at school but I will with you if you want.
     #Jimmy
     What! Oh! Yes... yes please...
-    -> CheckInventory
+    #General
+    + [Play Game] -> CheckInventory
 
     = AnthonyAmber
     ~Partner = "Anthony"
+#WithAnthony
  #Dana
  Hey Anthony.
 #Anthony
@@ -300,7 +316,7 @@ We’d been playing games with Harold earlier... but maybe we could try somethin
 Amber’s kinda picky though--fair warning.
     #Amber
     Am not!
-    -> CheckInventory
+   + [Play Game]  -> CheckInventory
 
  ->DONE
  
@@ -309,7 +325,6 @@ Amber’s kinda picky though--fair warning.
 #KimmyHouseDay1
 KimmyHouseDay1
 #General
-What do you want to do?
 + [Talk to Donna]
 -> Donna
 
@@ -322,6 +337,7 @@ What do you want to do?
 
 = Donna
 ~Partner = "Donna"
+#WithDonna
 #Kimmy
 Hi Donna.
 #Donna
@@ -367,7 +383,7 @@ I like your ears.
 Oh, thanks. They’re new. 
 #Donna
 Anyways, I wanna play a new game.
--> CheckInventory
++ [Play Game]  -> CheckInventory
         
 -> DONE
 
@@ -448,7 +464,7 @@ Dana and Kimmy now have {money} cents in their pocket.
         -> DONE
 
     = BuyDice
-
+        #Go
         { money - 4 >= 0: 
             ~ DiceNum = DiceNum - 1
             ~ money = money - 4
@@ -470,6 +486,7 @@ Dana and Kimmy now have {money} cents in their pocket.
         -> DONE
 
     = BuyChalks
+            #Go
         { money - 6 >= 0: 
             ~ money = money - 6
             ~ ChalkNum = ChalkNum - 1
@@ -498,36 +515,28 @@ Bye bye girls. Have fun.
     -> KimmyHouseDay1
 
 === CheckInventory ===
-    + [Check Games In Inventory] 
-      {HaveGame == false:
-      #General
-            There is currently no games in Inventory!
-            -> ZeroGame
+#Go
+      {HaveGame == false:  
+            #Dana
+             Oh no! I’m sorry... I thought I had some stuff to play games with in my bag... but it looks like I ran out.
+            #Kimmy
+            Oh no...
+             #Dana
+             It’s ok! Kimmy, let’s run to the store and buy some game pieces! We’ll be right back!
+            -> CurrentLocation
          - else:
-            -> Item
+            #General
+                You have 
+             {  DiceNum == 0:
+                <> 1 dice, 
+                }
+            { ChalkNum == 0:
+                <> 1 box of chalk
+            }
+             <> in your inventory.
+-> Games
          } 
 
-= ZeroGame
- #Dana
- Oh no! I’m sorry... I thought I had some stuff to play games with in my bag... but it looks like I ran out.
-#Kimmy
-Oh no...
- #Dana
- It’s ok! Kimmy, let’s run to the store and buy some game pieces! We’ll be right back!
--> CurrentLocation
-
-= Item
-#General
-    You have 
- {  DiceNum:
- - 0 :
-    <> 2 dices,
- - 1:
-    <> 1 dice,
-    }
- <> in your inventory.
-
--> Games
 
  === Games ===
  #General
@@ -674,7 +683,8 @@ OneHourLater
     - "Donna": -> Donna_Success
     - "Anthony": -> Anthony_Success
     }
-= Jimmy_Success    
+= Jimmy_Success 
+#WithJimmy
 #Kimmy
 You’re not bad at games Jimmy... I think you were good.
 #Jimmy
@@ -769,6 +779,7 @@ Will you be my friend, Kimmy?
 + [Back]-> CurrentLocation
 
 = Donna_Success  
+#WithDonna
 #Donna
 Kimmy loved that. I’m surprised, normally you’re so quiet Kimmy.
 #Kimmy
@@ -886,6 +897,7 @@ Cat ears too probably.
 
 
 = Anthony_Success  
+#WithAnthony
  #Dana
  You two picked that up really fast!
 #Anthony

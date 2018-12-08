@@ -22,10 +22,15 @@ namespace Resources.Scripts
 
 		private bool _kimmyInverse;
 
+		private bool _test;
+
 		private bool _startTransition;
 		private GameObject _transitionText;
 		private float _timer;
-		[SerializeField] private float _sceneLength;
+
+		private AudioSource _sfx;
+		[SerializeField]
+		private AudioClip _choiceFx;
 	
 		[SerializeField]
 		private TextAsset _inkJSONAsset;
@@ -56,7 +61,7 @@ namespace Resources.Scripts
 			RemoveChildren();
 			StartStory();
 			Destroy(GameObject.FindWithTag("Char"));
-		
+			_sfx = GetComponent<AudioSource>();
 
 		}
 
@@ -72,23 +77,24 @@ namespace Resources.Scripts
 				var text = _story.Continue();
 				text = text.Trim();
 				CreateContentView(text);
-				_needClick = true;
+				_needClick = !_story.currentTags.Contains("Go");
 			}
-
-			if (_needClick && (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return)))
+			
+			if (_needClick && Input.GetMouseButtonDown(0))
 			{
 				_needClick = false;
 				if (_story.currentChoices.Count > 0) return;
 				if (_startTransition)
 				{
 					GameObject[] transitionText = GameObject.FindGameObjectsWithTag("Transition");
-					for (var i = 0; i < transitionText.Length; i++)
+					foreach (var text in transitionText)
 					{
-						Destroy(transitionText[i]);
+						Destroy(text);
 					}
 					_startTransition = false;
 				}
 				RemoveChildren();
+				_sfx.Play();
 			}
 
 			if (_haveChoice) return;
@@ -120,6 +126,9 @@ namespace Resources.Scripts
 
 		// When we click the choice button, tell the story to choose that choice!
 		private void OnClickChoiceButton (Choice choice) {
+			Debug.Log("Button");
+			_test = true;
+			_sfx.PlayOneShot(_choiceFx);
 			_story.ChooseChoiceIndex (choice.index);
 			RemoveChildren();
 			_haveChoice = false;
@@ -134,11 +143,6 @@ namespace Resources.Scripts
 				if (!_kimmyInverse)
 				{
 					Instantiate(_sprite.Sprite.KimmyMark);
-					if (!_hasKimmy)
-					{
-						Instantiate(_sprite.Sprite.Kimmy);
-						_hasKimmy = true;
-					}
 					_textRectPivot = _sprite.Dialogue.Kimmy;
 					_textRight = false;
 				}
@@ -146,33 +150,89 @@ namespace Resources.Scripts
 				{
 					var kimmyMark = Instantiate(_sprite.Sprite.KimmyMark, _sprite.Sprite.InverseKimmy, Quaternion.identity);
 					kimmyMark.transform.localScale = new Vector3(-1, 1, 1);
-					if (!_hasKimmy)
-					{
-						var kimmy = Instantiate(_sprite.Sprite.Kimmy, _sprite.Sprite.InverseKimmy, Quaternion.identity);
-						kimmy.transform.localScale = new Vector3(-1, 1, 1);
-						_hasKimmy = true;
-					}
 					_textRectPivot = _sprite.Dialogue.KimmyInverse;
 					_textRight = true;
 				}
 
 			}
 
+			if (_story.currentTags.Contains("Home"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				Instantiate(_sprite.Sprite.Kimmy);
+				Instantiate(_sprite.Sprite.Mom);
+			}
+			
+			if (_story.currentTags.Contains("KimmyHouse"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				Instantiate(_sprite.Sprite.Kimmy);
+				Instantiate(_sprite.Sprite.Mom);
+				Instantiate(_sprite.Sprite.KimmyMom);
+			}
+
+			
+			if (_story.currentTags.Contains("WithKimmy"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				var kimmy = Instantiate(_sprite.Sprite.Kimmy, _sprite.Sprite.InverseKimmy, Quaternion.identity);
+				kimmy.transform.localScale = new Vector3(-1, 1, 1);
+			}
+			
+			if (_story.currentTags.Contains("WithAnthony"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				Instantiate(_sprite.Sprite.Kimmy);
+				Instantiate(_sprite.Sprite.Anthony);
+				Instantiate(_sprite.Sprite.Amber);
+			}
+			
+			if (_story.currentTags.Contains("WithDonna"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				Instantiate(_sprite.Sprite.Kimmy);
+					Instantiate(_sprite.Sprite.Donna);
+			}
+			
+			if (_story.currentTags.Contains("WithJimmy"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				Instantiate(_sprite.Sprite.Kimmy);
+				Instantiate(_sprite.Sprite.Jimmy);
+			}
+			
+			if (_story.currentTags.Contains("Shop"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				Instantiate(_sprite.Sprite.Kimmy);
+				Instantiate(_sprite.Sprite.Dean);
+			}
+			
+			if (_story.currentTags.Contains("WithAnthony"))
+			{
+				Instantiate(_sprite.Sprite.Dana);
+				Instantiate(_sprite.Sprite.Kimmy);
+				Instantiate(_sprite.Sprite.Anthony);
+				Instantiate(_sprite.Sprite.Amber);
+			}
+			
+		//Speaking Mark	
+			
 			if (_story.currentTags.Contains("General") )
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
 				_textRectPivot = new Vector2(0.5f, 0.5f);
 				_textRight = false;
 			}
-			
+
 			if (_story.currentTags.Contains("Dana"))
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasDana)
-				{
-					Instantiate(_sprite.Sprite.Dana);
-					_hasDana = true;
-				}
+//				if (!_hasDana)
+//				{
+//					Instantiate(_sprite.Sprite.Dana);
+//					_hasDana = true;
+//				}
 				Instantiate(_sprite.Sprite.DanaMark);
 				_textRectPivot = _sprite.Dialogue.Dana;
 				_textRight = false;
@@ -181,11 +241,11 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("Mom"))
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasMom)
-				{
-					Instantiate(_sprite.Sprite.Mom);
-					_hasMom = true;
-				}
+//				if (!_hasMom)
+//				{
+//					Instantiate(_sprite.Sprite.Mom);
+//					_hasMom = true;
+//				}
 				Instantiate(_sprite.Sprite.MomMark);
 				_textRectPivot = _sprite.Dialogue.Mom;
 				_textRight = true;
@@ -194,11 +254,11 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("kimmyMom") )
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasKimmyMom)
-				{
-					Instantiate(_sprite.Sprite.KimmyMom);
-					_hasKimmyMom = true;
-				}
+//				if (!_hasKimmyMom)
+//				{
+//					Instantiate(_sprite.Sprite.KimmyMom);
+//					_hasKimmyMom = true;
+//				}
 				Instantiate(_sprite.Sprite.KimmyMomMark);
 				_textRectPivot = _sprite.Dialogue.KimmyMom;
 				_textRight = true;
@@ -207,11 +267,11 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("Jimmy") )
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasJimmy)
-				{
-					Instantiate(_sprite.Sprite.Jimmy);
-					_hasJimmy = true;
-				}
+//				if (!_hasJimmy)
+//				{
+//					Instantiate(_sprite.Sprite.Jimmy);
+//					_hasJimmy = true;
+//				}
 				Instantiate(_sprite.Sprite.JimmyMark);
 				_textRectPivot = _sprite.Dialogue.Jimmy;
 				_textRight = true;
@@ -221,11 +281,11 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("Donna") )
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasDonna)
-				{
-					Instantiate(_sprite.Sprite.Donna);
-					_hasDonna = true;
-				}
+//				if (!_hasDonna)
+//				{
+//					Instantiate(_sprite.Sprite.Donna);
+//					_hasDonna = true;
+//				}
 				Instantiate(_sprite.Sprite.DonnaMark);
 				_textRectPivot = _sprite.Dialogue.Donna;
 				_textRight = true;
@@ -234,11 +294,11 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("Amber") )
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasAmber)
-				{
-					Instantiate(_sprite.Sprite.Amber);
-					_hasAmber = true;
-				}
+//				if (!_hasAmber)
+//				{
+//					Instantiate(_sprite.Sprite.Amber);
+//					_hasAmber = true;
+//				}
 				Instantiate(_sprite.Sprite.AmberMark);
 				_textRectPivot = _sprite.Dialogue.Amber;
 				_textRight = true;
@@ -247,11 +307,11 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("Anthony") )
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasAnthony)
-				{
-					Instantiate(_sprite.Sprite.Anthony);
-					_hasAnthony = true;
-				}
+//				if (!_hasAnthony)
+//				{
+//					Instantiate(_sprite.Sprite.Anthony);
+//					_hasAnthony = true;
+//				}
 				Instantiate(_sprite.Sprite.AnthonyMark);
 				_textRectPivot = _sprite.Dialogue.Anthony;
 				_textRight = true;
@@ -260,11 +320,11 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("Dean") )
 			{
 				Destroy(GameObject.FindWithTag("Mark"));
-				if (!_hasDean)
-				{
-					Instantiate(_sprite.Sprite.Dean);
-					_hasDean = true;
-				}
+//				if (!_hasDean)
+//				{
+//					Instantiate(_sprite.Sprite.Dean);
+//					_hasDean = true;
+//				}
 				Instantiate(_sprite.Sprite.DeanMark);
 				_textRectPivot = _sprite.Dialogue.Dean;
 				_textRight = true;
@@ -331,10 +391,11 @@ namespace Resources.Scripts
 
 		private void SceneTransition()
 		{
-			if (_story.currentTags.Contains("KimmyHouse"))
+			if (_story.currentTags.Contains("KimmyHouseTransition"))
 			{
-//				Destroy(GameObject.FindWithTag("Background"));
+				Destroy(GameObject.FindWithTag("Background"));
 				_transitionText= Instantiate(_sprite.Scene.KimmyHouse);
+				Instantiate(_sprite.Scene.KimmyHomePic);
 				_kimmyInverse = false;
 				_transitionText.transform.SetParent (_canvas.transform, false);
 				_startTransition = true;
@@ -344,6 +405,7 @@ namespace Resources.Scripts
 			{
 				Destroy(GameObject.FindWithTag("Background"));
 				_transitionText = Instantiate(_sprite.Scene.TheNextMorning);
+				Instantiate(_sprite.Scene.KimmyHomePic);
 				_kimmyInverse = true;
 				_transitionText.transform.SetParent (_canvas.transform, false);
 				_startTransition = true;
@@ -381,7 +443,7 @@ namespace Resources.Scripts
 			if (_story.currentTags.Contains("Shop"))
 			{
 				Destroy(GameObject.FindWithTag("Background"));
-//				Instantiate(_sprite.Scene.DowntownPic);
+				Instantiate(_sprite.Scene.Shop);
 			}
 		}
 	
