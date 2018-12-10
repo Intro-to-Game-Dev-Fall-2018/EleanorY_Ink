@@ -48,7 +48,7 @@
      
 ---
 
-[Ver1.5_20181210](https://jiaxi-yang.itch.io/kimmy-ver15)
+[Ver1.5_20181210](https://jiaxi-yang.itch.io/kimmy-almostdone)
 
     Fixed:
      - Sprites appear simultaneously;
