@@ -90,6 +90,7 @@
           <e p="Scripts" t="Include">
             <e p="AudioController.cs" t="Include" />
             <e p="ButtonController.cs" t="Include" />
+            <e p="FigureButtonController.cs" t="Include" />
             <e p="SceneTransition.cs" t="Include" />
             <e p="SpriteSetting.cs" t="Include" />
             <e p="StoryController.cs" t="Include" />

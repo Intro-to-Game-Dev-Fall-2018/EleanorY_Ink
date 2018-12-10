@@ -13,6 +13,9 @@ public class SpriteSetting : ScriptableObject
 	
 	[Header("Scene Transition Settings")]
 	public SceneTransitionSettings Scene;
+	
+	[Header("Figure Button Settings")]
+	public FigureChoiceSettings Figure;
 
 
 	[Serializable]
@@ -67,6 +70,16 @@ public class SpriteSetting : ScriptableObject
 		public GameObject Shop;
 		public GameObject Home;
 		public GameObject KimmyHomePic;
+	}
+	
+	
+	[Serializable]
+	public struct FigureChoiceSettings
+	{
+		public GameObject Jimmy;
+		public GameObject AnthonyAmber;
+		public GameObject Donna;
+		public GameObject Shop;
 	}
 }
 

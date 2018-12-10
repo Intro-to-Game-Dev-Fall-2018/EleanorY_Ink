@@ -12,6 +12,7 @@ TagManager:
   - Background
   - Music
   - SFX
+  - Jimmy
   layers:
   - Default
   - TransparentFX

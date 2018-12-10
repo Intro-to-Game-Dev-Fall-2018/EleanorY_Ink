@@ -9,15 +9,6 @@ VAR CurrentLocation = -> Map
 VAR Partner = "Kimmy"
 
 
-        + You win if you pick up your rock without falling or tossing it outside of the column ten times.#Dana 
-        -> Home
-        + You win if you pick up the most snacks. #Dana
-        -> Home
-        + You win if you finish ten turns without breaking more than one egg. #Dana
-        -> Home
-  
-
-=== Home ===
 #Home
 #Dana
 Mom! Look! God sent me a baby!
@@ -215,9 +206,7 @@ I don’t think Donna is my friend though, so she probably wouldn’t want to pl
  Downtown
  ~ CurrentLocation = -> Downtown
  
- 
- #General 
-
+ #DowntownFigure
  + [Talk to Jimmy]
         -> Jimmy
  + [Talk to Anthony]
@@ -228,7 +217,7 @@ I don’t think Donna is my friend though, so she probably wouldn’t want to pl
     = Jimmy
     ~Partner = "Jimmy"
     
-    #WithJimmy
+    #WithJimmy #NoFigure
     #Jimmy
     ...Hi Kimmy.
     #Kimmy
@@ -470,10 +459,10 @@ Dana and Kimmy now have {money} cents in their pocket.
             ~ money = money - 4
             ~ HaveGame = true
             #General
-            Danna buys a dice. Danna has {money} cents left.
+            Dana buys a dice. Dana has {money} cents left.
           - else:
           #General
-            Danna doesn't have enough money!
+            Dana doesn't have enough money!
             
           }
           { (DiceNum > 0) || (ChalkNum > 0): 
@@ -492,10 +481,10 @@ Dana and Kimmy now have {money} cents in their pocket.
             ~ ChalkNum = ChalkNum - 1
             ~ HaveGame = true
             #General
-            Danna buys a box of chalks. Danna has {money} cents left.
+            Dana buys a box of chalks. Dana has {money} cents left.
           - else:
           #General
-            Danna doesn't have enough money!
+            Dana doesn't have enough money!
           }
           { (DiceNum > 0) || (ChalkNum > 0): 
              + [Buy More]
