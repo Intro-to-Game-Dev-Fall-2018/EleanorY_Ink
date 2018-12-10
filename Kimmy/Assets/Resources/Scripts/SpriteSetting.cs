@@ -70,6 +70,7 @@ public class SpriteSetting : ScriptableObject
 		public GameObject Shop;
 		public GameObject Home;
 		public GameObject KimmyHomePic;
+		public GameObject OneHourLater;
 	}
 	
 	

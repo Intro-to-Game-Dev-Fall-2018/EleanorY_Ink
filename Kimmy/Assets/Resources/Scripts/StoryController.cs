@@ -57,6 +57,8 @@ namespace Resources.Scripts
 			RemoveChildren();
 			StartStory();
 			Destroy(GameObject.FindWithTag("Char"));
+			Destroy(GameObject.FindWithTag("Background"));
+			Instantiate(_sprite.Scene.Home);
 			_sfx = GetComponent<AudioSource>();
 
 		}
@@ -446,10 +448,8 @@ namespace Resources.Scripts
 
 			if (_story.currentTags.Contains("OneHourLater"))
 			{
-				Destroy(GameObject.FindWithTag("Background"));
-//				_transitionText = Instantiate(_sprite.Scene.Downtown);
-				_kimmyInverse = false;
-//				_transitionText.transform.SetParent (_canvas.transform, false);
+				_transitionText = Instantiate(_sprite.Scene.OneHourLater);
+				_transitionText.transform.SetParent (_canvas.transform, false);
 				_startTransition = true;
 			}
 
