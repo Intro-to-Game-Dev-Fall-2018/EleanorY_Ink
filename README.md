@@ -47,3 +47,12 @@
      - Music;
      
 ---
+
+[Ver1.5_20181210](https://jiaxi-yang.itch.io/kimmy-ver15)
+
+    Fixed:
+     - Sprites appear simultaneously;
+     - Added border for choice buttons;
+     - Fixed SFX;
+     
+---
