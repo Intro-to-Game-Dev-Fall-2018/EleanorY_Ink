@@ -1,5 +1,7 @@
 # EleanorY_Ink
 ### Kimmy Clone Game
+### [Final Version](https://jiaxi-yang.itch.io/kimmy-finalversion)
+
 [Ver1.1_20181114](https://jiaxi-yang.itch.io/kimmy-ver1)
 
     What I have so far: 
@@ -56,3 +58,5 @@
      - Fixed SFX;
      
 ---
+
+
