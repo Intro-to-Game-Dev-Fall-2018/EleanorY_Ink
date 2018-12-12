@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "SpriteSettings", menuName = "Settings/SpriteSettings")]
 public class SpriteSetting : ScriptableObject 
@@ -77,10 +78,10 @@ public class SpriteSetting : ScriptableObject
 	[Serializable]
 	public struct FigureChoiceSettings
 	{
-		public GameObject Jimmy;
-		public GameObject AnthonyAmber;
-		public GameObject Donna;
-		public GameObject Shop;
+		public Button Jimmy;
+		public Button AnthonyAmber;
+		public Button Donna;
+		public Button Shop;
 	}
 }
 

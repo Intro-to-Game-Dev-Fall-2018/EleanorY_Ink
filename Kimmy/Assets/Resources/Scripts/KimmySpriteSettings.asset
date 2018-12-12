@@ -66,8 +66,8 @@ MonoBehaviour:
     OneHourLater: {fileID: 1868904777143768, guid: a188a93da532a4425bbef1d90b7e717b,
       type: 2}
   Figure:
-    Jimmy: {fileID: 1465188134606162, guid: 943246966b70e4718adda50928b2d917, type: 2}
-    AnthonyAmber: {fileID: 1918893854216464, guid: 65adac7c039ae4660b6d9ef03c6364ab,
+    Jimmy: {fileID: 114183890257531544, guid: 943246966b70e4718adda50928b2d917, type: 2}
+    AnthonyAmber: {fileID: 114939663429656896, guid: 65adac7c039ae4660b6d9ef03c6364ab,
       type: 2}
-    Donna: {fileID: 1106250275370190, guid: 1e2c48e0d0f124b449bf459d4a8a0a81, type: 2}
-    Shop: {fileID: 0}
+    Donna: {fileID: 114661854154262502, guid: 1e2c48e0d0f124b449bf459d4a8a0a81, type: 2}
+    Shop: {fileID: 114888059533223294, guid: 4088ac373a1274b6cabc83fb6746b314, type: 2}

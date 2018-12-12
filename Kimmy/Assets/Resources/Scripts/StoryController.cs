@@ -7,12 +7,6 @@ namespace Resources.Scripts
 {
 	public class StoryController : MonoBehaviour
 	{
-		private bool _hasKimmy;
-		private bool _hasDana;
-		private bool _hasDonna;
-		private bool _hasMom;
-		private bool _hasKimmyMom;
-		private bool _hasJimmy;
 		private bool _hasAmber;
 		private bool _hasAnthony;
 		private bool _hasDean;
@@ -24,10 +18,10 @@ namespace Resources.Scripts
 
 		private bool _startTransition;
 		private GameObject _transitionText;
-
-		private bool _test;
 		
 		private float _timer;
+
+		private bool _back;
 
 		private AudioSource _sfx;
 		[SerializeField] private AudioClip _choiceFx;
@@ -60,6 +54,7 @@ namespace Resources.Scripts
 			Destroy(GameObject.FindWithTag("Background"));
 			Instantiate(_sprite.Scene.Home);
 			_sfx = GetComponent<AudioSource>();
+			_back = false;
 
 		}
 
@@ -76,7 +71,14 @@ namespace Resources.Scripts
 				var text = _story.Continue();
 				text = text.Trim();
 				CreateContentView(text);
-				_needClick = !_story.currentTags.Contains("Go");
+				if (_story.currentTags.Contains("Go") && _story.currentTags.Contains("Wait"));
+				{
+					_needClick = true;
+				}
+				if (!_story.currentTags.Contains("Go") || !_story.currentTags.Contains("Wait"))
+				{
+					_needClick = !_story.currentTags.Contains("Go");
+				}
 			}
 
 			if (_needClick && Input.GetMouseButtonDown(0))
@@ -102,15 +104,46 @@ namespace Resources.Scripts
 			if (_haveChoice) return;
 			if (_story.currentChoices.Count > 0)
 			{
-//				if (_story.currentTags.Contains("DowntownFigure"))
-//				{
-//					var jimmyFigure = Instantiate(_sprite.Figure.Jimmy);
-//					Instantiate(_sprite.Sprite.Anthony);
-//					Instantiate(_sprite.Sprite.Amber);
-//
-//				}
-//				else if (!_figure)
-//				{
+				if (_story.currentTags.Contains("DowntownFigure"))
+				{
+					ClearFigures();
+
+					Destroy(GameObject.FindWithTag("Mark"));
+					var jimmyFigure = Instantiate(_sprite.Figure.Jimmy);
+					var jimmyChoice = _story.currentChoices[0];
+					jimmyFigure.onClick.AddListener(delegate { OnClickChoiceButton(jimmyChoice); });
+					jimmyFigure.transform.SetParent(_canvas.transform, false);
+					
+					var anthonyAmberFigure = Instantiate(_sprite.Figure.AnthonyAmber);
+					var anthonyAmberChoice = _story.currentChoices[1];
+					anthonyAmberFigure.onClick.AddListener(delegate { OnClickChoiceButton(anthonyAmberChoice); });
+					anthonyAmberFigure.transform.SetParent(_canvas.transform, false);
+					
+					var button = CreateChoiceView(_story.currentChoices[2].text.Trim());
+					button.onClick.AddListener(delegate { OnClickChoiceButton(_story.currentChoices[2]); });
+					
+				}
+				else if (_story.currentTags.Contains("KimmyHouseFigure"))
+				{
+					ClearFigures();
+					
+					var donnaFigure = Instantiate(_sprite.Figure.Donna);
+					var donnaChoice = _story.currentChoices[0];
+					donnaFigure.onClick.AddListener(delegate { OnClickChoiceButton(donnaChoice); });
+					donnaFigure.transform.SetParent(_canvas.transform, false);
+					
+					var shopFigure = Instantiate(_sprite.Figure.Shop);
+					var shopChoice = _story.currentChoices[1];
+					shopFigure.onClick.AddListener(delegate { OnClickChoiceButton(shopChoice); });
+					shopFigure.transform.SetParent(_canvas.transform, false);
+					
+					var button = CreateChoiceView(_story.currentChoices[2].text.Trim());
+					button.onClick.AddListener(delegate { OnClickChoiceButton(_story.currentChoices[2]); });
+
+				}
+				else if (!_figure)
+				{
+					
 					foreach (var choice in _story.currentChoices)
 					{
 						var button = CreateChoiceView(choice.text.Trim());
@@ -118,7 +151,7 @@ namespace Resources.Scripts
 
 						button.onClick.AddListener(delegate { OnClickChoiceButton(choice1); });
 					}
-//				}
+				}
 
 				_haveChoice = true;
 			}
@@ -136,12 +169,16 @@ namespace Resources.Scripts
 		// When we click the choice button, tell the story to choose that choice!
 		private void OnClickChoiceButton(Choice choice)
 		{
-			_test = true;
 			_sfx.PlayOneShot(_choiceFx);
 			_story.ChooseChoiceIndex(choice.index);
 			RemoveChildren();
 			_haveChoice = false;
 			_needClick = false;
+			GameObject[] figures = GameObject.FindGameObjectsWithTag("Figure");
+			foreach (var figure in figures)
+			{
+				Destroy(figure);
+			}
 		}
 
 		private void CreateContentView(string text)
@@ -397,11 +434,6 @@ namespace Resources.Scripts
 			}
 
 			Destroy(GameObject.FindWithTag("Mark"));
-			_hasDana = false;
-			_hasKimmy = false;
-			_hasMom = false;
-			_hasKimmyMom = false;
-			_hasJimmy = false;
 		}
 
 		private void SceneTransition()
@@ -457,6 +489,34 @@ namespace Resources.Scripts
 			{
 				Destroy(GameObject.FindWithTag("Background"));
 				Instantiate(_sprite.Scene.Shop);
+				_back = true;
+			}
+			
+			if (_story.currentTags.Contains("back") && _back)
+			{
+				Destroy(GameObject.FindWithTag("Background"));
+				Instantiate(_sprite.Scene.KHD1Pic);
+			}
+		}
+
+
+		private void ClearFigures()
+		{
+			GameObject[] figures = GameObject.FindGameObjectsWithTag("Figure");
+			foreach (var figure in figures)
+			{
+				Destroy(figure);
+			}
+			GameObject[] characters = GameObject.FindGameObjectsWithTag("Char");
+			foreach (var character in characters)
+			{
+				Destroy(character);
+			}
+			
+			GameObject[] marks = GameObject.FindGameObjectsWithTag("Mark");
+			foreach (var mark in marks)
+			{
+				Destroy(mark);
 			}
 		}
 	}

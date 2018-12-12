@@ -196,16 +196,20 @@ I don’t think Donna is my friend though, so she probably wouldn’t want to pl
 
 + [Downtown]
 
--> Downtown
+-> Downtown_intro
 
 + [Kimmy's House]
--> KimmyHouseDay1
+-> KimmyHouseDay1_intro
 
-=== Downtown ===
+
+=== Downtown_intro === 
+ ~ CurrentLocation = -> Downtown
  #Downtown
  Downtown
+-> Downtown
+
+=== Downtown ===
  ~ CurrentLocation = -> Downtown
- 
  #DowntownFigure
  + [Talk to Jimmy]
         -> Jimmy
@@ -309,11 +313,16 @@ Amber’s kinda picky though--fair warning.
 
  ->DONE
  
-=== KimmyHouseDay1 ===
+=== KimmyHouseDay1_intro === 
 ~ CurrentLocation = -> KimmyHouseDay1
 #KimmyHouseDay1
-KimmyHouseDay1
-#General
+KimmyHouse
+-> KimmyHouseDay1
+
+=== KimmyHouseDay1 ===
+~ CurrentLocation = -> KimmyHouseDay1
+#KimmyHouseFigure
+#back
 + [Talk to Donna]
 -> Donna
 
@@ -377,8 +386,11 @@ Anyways, I wanna play a new game.
 -> DONE
 
 === Shop ===
-
-{not ShopIntro: -> ShopIntro} 
+#Go
+{not ShopIntro: 
+- #Wait 
+-> ShopIntro
+}
 {ShopIntro: -> StartShopping}
 = ShopIntro
 #Dean #Shop
@@ -459,7 +471,7 @@ Dana and Kimmy now have {money} cents in their pocket.
             ~ money = money - 4
             ~ HaveGame = true
             #General
-            Dana buys a dice. Dana has {money} cents left.
+            Dana buys a Dice. Dana has {money} cents left.
           - else:
           #General
             Dana doesn't have enough money!
@@ -517,7 +529,7 @@ Bye bye girls. Have fun.
             #General
                 You have 
              {  DiceNum == 0:
-                <> 1 dice, 
+                <> 1 Dice, 
                 }
             { ChalkNum == 0:
                 <> 1 box of chalk
@@ -542,7 +554,7 @@ What do you want to play with?
  
    = DiceGame
 Ok, I'll teach you how to play Yahtzee. #Dana
-    + You need a twenty-side die -> dice_second_step(false)
+    + You need a twenty-side Dice -> dice_second_step(false)
     + You need five dice. -> dice_second_step(true)
     + You need 100 dice. -> dice_second_step(false)
   -> DONE
@@ -975,7 +987,7 @@ All you majorettes kick like crazy in those dance routines... it looks kind of p
 #Kimmy
 I want to play with a baton... 
 #Kimmy
-dad took me to see sports once and I saw the ladies twirling batons. 
+dad took me to see sports once and I saw the laDices twirling batons. 
 #Kimmy
 We were far in the back, so they looked really tiny.
 #Anthony
